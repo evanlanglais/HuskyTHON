@@ -1,0 +1,7 @@
+{
+  "name": "HuskyTHON",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
