@@ -1,28 +1,17 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Fundraising</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">Fundraising</ion-title>
-                </ion-toolbar>
-            </ion-header>
-
-            <ExploreContainer name="Fundraising page"/>
-        </ion-content>
-    </ion-page>
+  <ion-page>
+    <the-header></the-header>
+    <ion-content>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent} from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import {IonPage, IonContent} from '@ionic/vue';
+import TheHeader from "@/components/TheHeader.vue";
 
 export default {
-    name: 'Fundraising',
-    components: {ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage}
+  name: 'Fundraising',
+  components: {TheHeader, IonContent, IonPage}
 }
 </script>
