@@ -1,28 +1,25 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Home</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">Home</ion-title>
-                </ion-toolbar>
-            </ion-header>
-
-            <ExploreContainer name="Home page"/>
-        </ion-content>
-    </ion-page>
+  <ion-page>
+    <the-header></the-header>
+    <ion-content>
+      <participant-panel></participant-panel>
+      <events-slider></events-slider>
+      <socials-panel></socials-panel>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent} from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import {IonPage, IonContent} from '@ionic/vue';
+import ParticipantPanel from "@/components/ParticipantPanel.vue";
+import EventsSlider from "@/components/EventsSlider.vue";
+import SocialsPanel from "@/components/SocialsPanel.vue";
+import TheHeader from "@/components/TheHeader.vue";
 
 export default {
-    name: 'Home',
-    components: {ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage}
+  name: 'Home',
+  components: {
+    TheHeader, SocialsPanel, EventsSlider, ParticipantPanel, IonContent, IonPage
+  }
 }
 </script>
