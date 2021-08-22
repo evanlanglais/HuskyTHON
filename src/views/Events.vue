@@ -1,28 +1,19 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Events</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">Events</ion-title>
-                </ion-toolbar>
-            </ion-header>
-
-            <ExploreContainer name="Events page"/>
-        </ion-content>
-    </ion-page>
+  <ion-page>
+    <the-header></the-header>
+    <ion-content>
+      <events-list></events-list>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent} from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import {IonPage, IonContent} from '@ionic/vue';
+import EventsList from "@/components/EventsList.vue";
+import TheHeader from "@/components/TheHeader.vue";
 
 export default {
-    name: 'Events',
-    components: {ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage}
+  name: 'Events',
+  components: {TheHeader, EventsList, IonContent, IonPage}
 }
 </script>
