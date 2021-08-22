@@ -1,28 +1,25 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Info</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">Info</ion-title>
-                </ion-toolbar>
-            </ion-header>
-
-            <ExploreContainer name="Info page"/>
-        </ion-content>
-    </ion-page>
+  <ion-page>
+    <the-header></the-header>
+    <ion-content>
+      <info-checklist-card></info-checklist-card>
+      <info-contact-card></info-contact-card>
+      <info-developer-card></info-developer-card>
+      <info-version-card appVersion="3.0.0"></info-version-card>
+    </ion-content>
+  </ion-page>
 </template>
 
 <script lang="ts">
-import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent} from '@ionic/vue';
-import ExploreContainer from '@/components/ExploreContainer.vue';
+import {IonPage, IonContent} from '@ionic/vue';
+import TheHeader from "@/components/TheHeader.vue";
+import InfoChecklistCard from "@/components/InfoChecklistCard.vue";
+import InfoContactCard from "@/components/InfoContactCard.vue";
+import InfoDeveloperCard from "@/components/InfoDeveloperCard.vue";
+import InfoVersionCard from "@/components/InfoVersionCard.vue";
 
 export default {
-    name: 'Info',
-    components: {ExploreContainer, IonHeader, IonToolbar, IonTitle, IonContent, IonPage}
+  name: 'Info',
+  components: {InfoVersionCard, InfoDeveloperCard, InfoContactCard, InfoChecklistCard, TheHeader, IonContent, IonPage}
 }
 </script>
