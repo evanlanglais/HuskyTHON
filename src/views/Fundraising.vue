@@ -1,6 +1,10 @@
 <template>
   <ion-page>
-    <the-header></the-header>
+    <ion-header collapse="condense">
+      <ion-toolbar color="primary">
+        <ion-title size="large">Fundraising</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-content>
     </ion-content>
   </ion-page>

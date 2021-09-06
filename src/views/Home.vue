@@ -1,6 +1,6 @@
 <template>
   <ion-page>
-    <the-header></the-header>
+    <home-header></home-header>
     <ion-content>
       <participant-panel></participant-panel>
       <events-slider></events-slider>

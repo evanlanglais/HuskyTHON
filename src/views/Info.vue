@@ -1,6 +1,10 @@
 <template>
   <ion-page>
-    <the-header></the-header>
+    <ion-header collapse="condense">
+      <ion-toolbar color="primary">
+        <ion-title size="large">Info & Links</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-content>
       <info-checklist-card></info-checklist-card>
       <info-contact-card></info-contact-card>
@@ -11,15 +15,15 @@
 </template>
 
 <script lang="ts">
-import {IonPage, IonContent} from '@ionic/vue';
-import TheHeader from "@/components/TheHeader.vue";
+import {IonPage, IonContent, IonHeader, IonToolbar, IonTitle} from '@ionic/vue';
 import InfoChecklistCard from "@/components/InfoChecklistCard.vue";
 import InfoContactCard from "@/components/InfoContactCard.vue";
 import InfoDeveloperCard from "@/components/InfoDeveloperCard.vue";
 import InfoVersionCard from "@/components/InfoVersionCard.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: 'Info',
-  components: {InfoVersionCard, InfoDeveloperCard, InfoContactCard, InfoChecklistCard, TheHeader, IonContent, IonPage}
-}
+  components: {InfoVersionCard, InfoDeveloperCard, InfoContactCard, InfoChecklistCard, IonHeader, IonToolbar, IonTitle, IonContent, IonPage}
+});
 </script>

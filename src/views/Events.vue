@@ -1,6 +1,10 @@
 <template>
   <ion-page>
-    <the-header></the-header>
+    <ion-header collapse="condense">
+      <ion-toolbar color="primary">
+        <ion-title size="large">Events</ion-title>
+      </ion-toolbar>
+    </ion-header>
     <ion-content>
       <events-list></events-list>
     </ion-content>
@@ -8,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import {IonPage, IonContent} from '@ionic/vue';
+import {IonPage, IonContent, IonHeader, IonTitle, IonToolbar} from '@ionic/vue';
 import EventsList from "@/components/EventsList.vue";
 import TheHeader from "@/components/TheHeader.vue";
 
