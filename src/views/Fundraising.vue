@@ -6,16 +6,18 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
+      <fundraising-search></fundraising-search>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import {IonPage, IonContent} from '@ionic/vue';
-import TheHeader from "@/components/TheHeader.vue";
+import {IonPage, IonContent, IonHeader, IonToolbar, IonTitle} from '@ionic/vue';
+import { defineComponent } from "vue";
+import FundraisingSearch from "@/components/FundraisingSearch.vue";
 
-export default {
+export default defineComponent({
   name: 'Fundraising',
-  components: {TheHeader, IonContent, IonPage}
-}
+  components: {FundraisingSearch, IonHeader, IonToolbar, IonTitle, IonContent, IonPage}
+});
 </script>
