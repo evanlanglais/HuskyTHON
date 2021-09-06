@@ -29,8 +29,9 @@
 import {IonGrid, IonRow, IonCol, IonButton, IonIcon} from "@ionic/vue";
 import {logoYoutube, logoTwitter, logoInstagram, logoFacebook} from 'ionicons/icons';
 import {Browser} from "@capacitor/browser";
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "SocialsPanelLinks",
   components: {IonGrid, IonRow, IonCol, IonButton, IonIcon},
   setup() {
@@ -76,7 +77,7 @@ export default {
       await Browser.open({url, windowName: '_system'});
     }
   }
-}
+});
 </script>
 
 <style scoped>

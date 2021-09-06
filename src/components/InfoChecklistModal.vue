@@ -136,8 +136,9 @@
 <script lang="ts">
 import {IonItem, IonItemDivider, IonList, IonLabel, IonCard, IonContent, IonCardHeader, IonCardTitle, IonCheckbox, IonHeader, IonToolbar, IonTitle, IonButton, IonPage, modalController} from "@ionic/vue";
 import {Storage} from '@capacitor/storage';
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: "InfoChecklistModal",
   components: {IonItem, IonItemDivider, IonList, IonLabel, IonCard, IonContent, IonCardHeader, IonCardTitle, IonCheckbox, IonHeader, IonToolbar, IonTitle, IonButton, IonPage},
   data() {
@@ -158,7 +159,7 @@ export default {
       await modalController.dismiss();
     }
   }
-}
+});
 </script>
 
 <style scoped>

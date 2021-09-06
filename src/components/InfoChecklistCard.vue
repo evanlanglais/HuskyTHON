@@ -22,10 +22,10 @@
 
 <script lang="ts">
 import {IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonModal} from "@ionic/vue";
-import { ref } from 'vue';
+import { ref, defineComponent } from 'vue';
 import InfoChecklistModal from "@/components/InfoChecklistModal.vue";
 
-export default {
+export default defineComponent({
   name: "InfoChecklistCard",
   components: {InfoChecklistModal, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonModal},
   setup() {
@@ -33,7 +33,7 @@ export default {
     const setOpen = (state: boolean) => isOpenRef.value = state;
     return { isOpenRef, setOpen }
   }
-}
+});
 </script>
 
 <style scoped>
