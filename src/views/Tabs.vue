@@ -2,7 +2,7 @@
   <ion-page>
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
-      <ion-tab-bar slot="bottom">
+      <ion-tab-bar slot="bottom" color="primary">
         <ion-tab-button tab="home" href="/tabs/home">
           <ion-icon :icon="home"/>
           <ion-label>Home</ion-label>
@@ -10,7 +10,7 @@
 
         <ion-tab-button tab="events" href="/tabs/events">
           <ion-icon :icon="calendar"/>
-          <ion-label>Calendar</ion-label>
+          <ion-label>Events</ion-label>
         </ion-tab-button>
 
         <ion-tab-button tab="fundraising" href="/tabs/fundraising">
@@ -29,8 +29,9 @@
 <script lang="ts">
 import {IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet} from '@ionic/vue';
 import {home, calendar, flame, informationCircle} from 'ionicons/icons';
+import { defineComponent } from "vue";
 
-export default {
+export default defineComponent({
   name: 'Tabs',
   components: {IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet},
   setup() {
@@ -41,5 +42,5 @@ export default {
       informationCircle,
     }
   }
-}
+})
 </script>
