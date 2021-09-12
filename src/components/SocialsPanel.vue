@@ -1,5 +1,4 @@
 <template>
-  <socials-panel-card-twitter></socials-panel-card-twitter>
   <socials-panel-links
     twitter-url="https://twitter.com/huskython"
     youtube-url="https://www.youtube.com/channel/UCb3LCNgQfnYhB_LGveqT3IA"
@@ -10,10 +9,10 @@
 
 <script>
 import SocialsPanelLinks from "@/components/SocialsPanelLinks";
-import SocialsPanelCardTwitter from "@/components/SocialsPanelCardTwitter";
+
 export default {
   name: "SocialsPanel",
-  components: {SocialsPanelCardTwitter, SocialsPanelLinks}
+  components: {SocialsPanelLinks}
 }
 </script>
 
