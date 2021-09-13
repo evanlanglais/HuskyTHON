@@ -2,24 +2,24 @@
  <ion-grid>
    <ion-row>
      <ion-col>
-       <button-card text="Fundraising"
-                    :image="require('@/assets/images/fundraising_resources_resized.jpg')"
-                    color="tertiary"
-                    :link="require('@/assets/docs/Fundraising Initiatives.pdf').default"></button-card>
-     </ion-col>
-     <ion-col>
        <button-card text="Why We Dance"
                     :image="require('@/assets/images/why_we_dance_resized.jpg')"
                     color="secondary"
                     link="https://huskython.org/why-we-dance/"></button-card>
      </ion-col>
-   </ion-row>
-   <ion-row>
      <ion-col>
        <button-card text="Meet The Kids"
                     :image="require('@/assets/images/meet_the_kids_resized.jpg')"
                     color="success"
                     link="https://huskython.org/meet-the-kids/"></button-card>
+     </ion-col>
+   </ion-row>
+   <ion-row>
+     <ion-col>
+       <button-card text="Fundraising"
+                    :image="require('@/assets/images/fundraising_resources_resized.jpg')"
+                    color="tertiary"
+                    :link="require('@/assets/docs/Fundraising Initiatives.pdf').default"></button-card>
      </ion-col>
      <ion-col>
        <button-card text="Contact Us"
