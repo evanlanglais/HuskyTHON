@@ -1,5 +1,5 @@
 <template>
-  <Calendar :is-expanded="true" :from-date="this.today" :attributes="attributes"/>
+  <Calendar ref="calendar" :is-expanded="true" :attributes="attributes" @dayclick="dayClick"/>
 </template>
 
 <script>
@@ -9,20 +9,26 @@ import { DateTime } from "luxon";
 export default {
   name: "EventsCalendar",
   components: { Calendar },
-  data() {
-    return {
-      today: DateTime.now().toJSDate()
-    }
-  },
-  props: ["events"],
+  props: ["events", "focusDate"],
   computed: {
     attributes() {
       return this.events.map(event => {
           return {
             highlight: true,
-            dates: { start: event.dateStart.toJSDate(), end: event.dateEnd.toJSDate() }
+            dates: { start: event.start.toJSDate(), end: event.end.toJSDate() }
           }
       });
+    }
+  },
+  mounted() {
+    this.$refs.calendar.focusDate(this.focusDate.toJSDate());
+  },
+  methods: {
+    dayClick(day) {
+      const d = DateTime.fromJSDate(day.date);
+      if (d.month === this.focusDate.month && d.year === this.focusDate.year && d.day === this.focusDate.day) return;
+
+      this.$emit('focusDateChange', d);
     }
   }
 }
