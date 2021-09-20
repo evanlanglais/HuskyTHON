@@ -1,7 +1,7 @@
 <template>
-  <ion-card @click="setOpen(true)">
+  <ion-card @click="setOpen(true)" color="secondary">
     <ion-card-header>
-      <ion-card-title>HuskyTHON Item Checklist</ion-card-title>
+      <ion-card-title>Event Item Checklist</ion-card-title>
     </ion-card-header>
 
     <ion-card-content>
