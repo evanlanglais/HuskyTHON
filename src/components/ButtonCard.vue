@@ -1,5 +1,5 @@
 <template>
-  <ion-card :button="true" :color="color" v-on:click="openLink()">
+  <ion-card :button="true" :color="color" @click="openLink()">
     <img :src="this.image" alt="image"/>
     <ion-card-header>
       <ion-card-subtitle class="ion-text-center">{{ this.text }}</ion-card-subtitle>

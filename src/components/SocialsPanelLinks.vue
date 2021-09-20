@@ -1,23 +1,23 @@
 <template>
-  <ion-grid class="ion-no-padding ion-margin">
-    <ion-row class="ion-no-padding ion-margin-bottom">
-      <ion-col class="ion-no-padding">
-        <ion-button expand="full" class="facebook-button" @click="openFacebook()">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="block" class="facebook-button" @click="openFacebook()">
           <ion-icon slot="icon-only" :icon="logoFacebook"></ion-icon>
         </ion-button>
       </ion-col>
-      <ion-col class="ion-no-padding">
-        <ion-button expand="full" class="twitter-button" @click="openTwitter()">
+      <ion-col>
+        <ion-button expand="block" class="twitter-button" @click="openTwitter()">
           <ion-icon slot="icon-only" :icon="logoTwitter"></ion-icon>
         </ion-button>
       </ion-col>
-      <ion-col class="ion-no-padding">
-        <ion-button expand="full" class="youtube-button" @click="openYoutube()">
+      <ion-col>
+        <ion-button expand="block" class="youtube-button" @click="openYoutube()">
           <ion-icon slot="icon-only" :icon="logoYoutube"></ion-icon>
         </ion-button>
       </ion-col>
-      <ion-col class="ion-no-padding">
-        <ion-button expand="full" class="insta-button" @click="openInstagram()">
+      <ion-col>
+        <ion-button expand="block" class="insta-button" @click="openInstagram()">
           <ion-icon slot="icon-only" :icon="logoInstagram"></ion-icon>
         </ion-button>
       </ion-col>
@@ -84,24 +84,20 @@ export default defineComponent({
 .twitter-button {
   --background: #1DA1F2;
   --color: #ffffff;
-  height: 100%;
 }
 
 .facebook-button {
   --background: #3B5998;
   --color: #ffffff;
-  height: 100%;
 }
 
 .youtube-button {
   --background: #ff0000;
   --color: #ffffff;
-  height: 100%;
 }
 
 .insta-button {
   --background: #c13584;
   --color: #ffffff;
-  height: 100%;
 }
 </style>
