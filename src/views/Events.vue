@@ -13,18 +13,9 @@
                                refreshing-text="Refreshing...">
         </ion-refresher-content>
       </ion-refresher>
-      <ion-loading
-        :is-open="this.loading"
-        message="Loading Events..."
-      ></ion-loading>
-      <div v-if="errored">
-        <ion-icon :icon="cloudOfflineOutline"></ion-icon>
-        <ion-label class="ion-text-center">
-          <h1>Error while loading events</h1>
-          <p>Please try again in a little bit</p>
-        </ion-label>
-      </div>
-      <div v-else>
+      <loading-indicator :is-loading="loading"/>
+      <offline-indicator v-if="errored"/>
+      <div v-if="!loading && !errored">
         <div class="ion-text-center">
           <events-calendar :events="events" :focus-date="focusDate" @focus-date-change="focusDate = $event"></events-calendar>
         </div>
@@ -35,27 +26,31 @@
 </template>
 
 <script lang="ts">
-import {IonPage, IonContent, IonHeader, IonTitle, IonToolbar, IonLoading, IonIcon, IonLabel, IonRefresher, IonRefresherContent} from '@ionic/vue';
-import {cloudOfflineOutline, chevronDownCircleOutline} from 'ionicons/icons';
+import {IonPage, IonContent, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent} from '@ionic/vue';
+import {chevronDownCircleOutline} from 'ionicons/icons';
 import EventsList from "@/components/EventsList.vue";
 import EventsCalendar from "@/components/EventsCalendar.vue";
 import { DateTime } from "luxon";
 import { defineComponent } from "vue";
 import axios from "axios";
 import {HuskythonEvent} from "@/types/HuskythonEvent";
+import OfflineIndicator from "@/components/OfflineIndicator.vue";
+import LoadingIndicator from "@/components/LoadingIndicator.vue";
 
 export default defineComponent({
   name: 'Events',
-  components: {EventsCalendar, EventsList, IonContent, IonPage, IonHeader, IonTitle, IonToolbar, IonLoading, IonIcon, IonLabel, IonRefresher, IonRefresherContent},
+  components: {
+    LoadingIndicator,
+    OfflineIndicator,
+    EventsCalendar, EventsList, IonContent, IonPage, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent},
   setup() {
     return {
-      cloudOfflineOutline,
       chevronDownCircleOutline
     }
   },
   data() {
     return {
-      loading: true,
+      loading: false,
       errored: false,
       events: [],
       focusDate: DateTime.now()
@@ -66,8 +61,10 @@ export default defineComponent({
   },
   methods: {
     getEvents() {
+      this.loading = true;
+      this.errored = false;
       return axios
-        .get('http://localhost:3000/api/events')
+        .get('http://localhost:3000/api/events', {timeout: 5000})
         .then(response => {
           this.events = response.data.map((rawEvent: any): HuskythonEvent => ({
             id: rawEvent.id,
@@ -81,7 +78,7 @@ export default defineComponent({
           }));
         })
         .catch(error => {
-          console.error(error)
+          console.log(error)
           this.errored = true
         })
         .finally(() => this.loading = false)
