@@ -1,0 +1,6 @@
+{
+	"appId": "com.evanlanglais.huskython",
+	"appName": "HuskyTHON",
+	"webDir": "dist",
+	"bundledWebRuntime": false
+}
