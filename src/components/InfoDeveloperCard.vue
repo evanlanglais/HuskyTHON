@@ -5,7 +5,7 @@
       <ion-card-title>Evan Langlais</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <ion-label>evanlanglais@gmail.com</ion-label>
+      <ion-label>evanlanglais.com</ion-label>
     </ion-card-content>
   </ion-card>
 </template>
