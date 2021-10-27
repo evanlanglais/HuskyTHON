@@ -5,33 +5,38 @@
         {{ this.title }}
       </ion-card-title>
     </ion-card-header>
-    <ion-card-content >
-      <div class="scrolling-wrapper">
-
-
-      <div class="scroll-card" v-for="item in items" :key="item.participantID" >
-        <fundraising-card :id="item.participantID" :name="item.displayName" :avatar-url="item.avatarImageURL" :raised="item.sumDonations"/>
-      </div>
-      </div>
+    <ion-card-content>
+      <ion-grid v-if="!!items && items.length >= 6">
+        <ion-row>
+          <ion-col v-for="item in items.slice(0, 3)" :key="item.id">
+            <fundraising-card :item="item"/>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col v-for="item in items.slice(3, 6)" :key="item.id">
+            <fundraising-card :item="item"/>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 </template>
 
 <script lang="ts">
 import FundraisingCard from "@/components/FundraisingCard.vue";
-import {IonCard, IonCardHeader, IonCardTitle, IonCardContent} from "@ionic/vue";
+import {IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonCol} from "@ionic/vue";
 import {defineComponent, PropType} from "vue";
-import {Participant} from "@/types/Participant";
+import {GenericFundraisingItem} from "@/types/GenericFundraisingItem";
 
 export default defineComponent({
   name: "FundraisingList",
-  components: {FundraisingCard, IonCard, IonCardHeader, IonCardTitle, IonCardContent},
+  components: {FundraisingCard, IonCard, IonGrid, IonRow, IonCol, IonCardHeader, IonCardTitle, IonCardContent},
   props: {
     title: {
       type: String as PropType<string>
     },
     items: {
-      type: Array as PropType<Array<Participant>>
+      type: Array as PropType<Array<GenericFundraisingItem>>
     }
   },
   data() {
@@ -43,13 +48,5 @@ export default defineComponent({
 </script>
 
 <style scoped>
-.scrolling-wrapper {
-  overflow-x: scroll;
-  overflow-y: hidden;
-  white-space: nowrap;
-}
 
-.scroll-card {
-  display: inline-block;
-}
 </style>
