@@ -4,15 +4,16 @@
   </ion-list>
 </template>
 
-<script>
+<script lang="ts">
 import {IonList} from '@ionic/vue';
-import EventsListFocus from "@/components/EventsListFocus";
+import EventsListFocus from "@/components/EventsListFocus.vue";
+import {defineComponent} from "vue";
 
-export default {
+export default defineComponent({
   name: "EventsList",
   components: {EventsListFocus, IonList},
   props: ["events", "focusDate"]
-}
+})
 </script>
 
 <style scoped>

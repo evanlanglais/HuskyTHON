@@ -18,9 +18,9 @@
                                refreshing-text="Refreshing...">
         </ion-refresher-content>
       </ion-refresher>
-      <loading-indicator :is-loading="loading"/>
-      <offline-indicator v-if="errored"/>
-      <div v-if="!loading && !errored">
+      <loading-indicator v-if="loading"/>
+      <offline-indicator v-if="!events"/>
+      <div v-if="!loading && !!events">
         <div class="ion-text-center">
           <events-calendar :events="events" :focus-date="focusDate" @focus-date-change="focusDate = $event"></events-calendar>
         </div>
@@ -37,10 +37,10 @@ import EventsList from "@/components/EventsList.vue";
 import EventsCalendar from "@/components/EventsCalendar.vue";
 import { DateTime } from "luxon";
 import { defineComponent } from "vue";
-import axios from "axios";
 import {HuskythonEvent} from "@/types/HuskythonEvent";
 import OfflineIndicator from "@/components/OfflineIndicator.vue";
 import LoadingIndicator from "@/components/LoadingIndicator.vue";
+import {GetHuskythonEvents} from "@/scripts/Api";
 
 export default defineComponent({
   name: 'Events',
@@ -56,40 +56,21 @@ export default defineComponent({
   data() {
     return {
       loading: false,
-      errored: false,
-      events: [],
+      events: undefined as (Array<HuskythonEvent> | undefined),
       focusDate: DateTime.now()
     }
   },
   mounted() {
-    this.getEvents();
+    this.refreshEvents();
   },
   methods: {
-    getEvents() {
+    async refreshEvents() {
       this.loading = true;
-      this.errored = false;
-      return axios
-        .get('http://localhost:3000/api/events', {timeout: 5000})
-        .then(response => {
-          this.events = response.data.map((rawEvent: any): HuskythonEvent => ({
-            id: rawEvent.id,
-            summary: rawEvent.summary,
-            start: DateTime.fromISO(rawEvent.start),
-            end: DateTime.fromISO(rawEvent.end),
-            allDay: rawEvent.allDay,
-            timezone: rawEvent.timezone,
-            location: rawEvent.location,
-            link: rawEvent.link
-          }));
-        })
-        .catch(error => {
-          console.log(error)
-          this.errored = true
-        })
-        .finally(() => this.loading = false)
+      this.events = await GetHuskythonEvents();
+      this.loading = false;
     },
     doRefresh(event: any) {
-      this.getEvents().finally(() => event.target.complete());
+      this.refreshEvents().finally(() => event.target.complete());
     }
   }
 });

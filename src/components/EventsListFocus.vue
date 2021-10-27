@@ -3,6 +3,12 @@
     <ion-item-divider>
       <ion-label>Events on {{ focusDateString }}</ion-label>
     </ion-item-divider>
+    <ion-item v-if="this.filteredEvents.length === 0" lines="none" class="ion-text-center">
+      <ion-label class="ion-text-wrap">
+        <h1>No events today</h1>
+        <p>Check back in the future for events as they are planned</p>
+      </ion-label>
+    </ion-item>
     <ion-item detail v-for="event in this.filteredEvents" :key="event.id">
       <ion-label class="ion-text-wrap">
         <h2>{{ event.summary }}</h2>
