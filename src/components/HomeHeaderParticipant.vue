@@ -1,5 +1,5 @@
 <template>
-  <ion-spinner v-if="isLoading"/>
+  <loading-indicator v-if="isLoading && !isParticipantSet"></loading-indicator>
   <home-header-participant-populated v-if="isParticipantSet" :participant="setParticipant"/>
   <home-header-participant-unset v-if="!isParticipantSet && !isLoading"/>
 </template>
@@ -11,10 +11,11 @@ import {Participant} from "@/types/Participant";
 import {defineComponent} from "vue";
 import {Storage} from "@capacitor/storage";
 import {GetParticipantById} from "@/scripts/Api";
+import LoadingIndicator from "@/components/LoadingIndicator.vue";
 
 export default defineComponent({
   name: "HomeHeaderParticipant",
-  components: {HomeHeaderParticipantUnset, HomeHeaderParticipantPopulated},
+  components: {LoadingIndicator, HomeHeaderParticipantUnset, HomeHeaderParticipantPopulated},
   mounted() {
     this.loadSetParticipant();
   },
