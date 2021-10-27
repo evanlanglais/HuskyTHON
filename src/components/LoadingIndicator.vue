@@ -1,6 +1,6 @@
 <template>
-  <div class="ion-text-center" v-if="isLoading">
-    <ion-spinner />
+  <div class="container">
+    <ion-spinner></ion-spinner>
   </div>
 </template>
 
@@ -9,13 +9,14 @@ import {IonSpinner} from "@ionic/vue";
 
 export default {
   name: "LoadingIndicator",
-  components: {IonSpinner},
-  props: {
-    isLoading: Boolean
-  }
+  components: {IonSpinner}
 }
 </script>
 
 <style scoped>
-
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
 </style>
