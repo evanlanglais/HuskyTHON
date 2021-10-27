@@ -1,11 +1,16 @@
 <template>
   <ion-page>
-    <ion-header collapse="condense">
-      <ion-toolbar color="primary">
-        <ion-title size="large">Events</ion-title>
+    <ion-header>
+      <ion-toolbar color="primary" class="but">
+        <ion-title>Events</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content>
+      <ion-header collapse="condense">
+        <ion-toolbar color="primary">
+          <ion-title size="large">Events</ion-title>
+        </ion-toolbar>
+      </ion-header>
       <ion-refresher ref="refresher" slot="fixed" @ionRefresh="doRefresh($event)">
         <ion-refresher-content :pulling-icon="chevronDownCircleOutline"
                                pulling-text="Pull to refresh"
@@ -89,3 +94,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.but {
+  background-color: var(--ion-color-primary);
+}
+</style>

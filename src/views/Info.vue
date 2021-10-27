@@ -1,11 +1,16 @@
 <template>
   <ion-page>
-    <ion-header collapse="condense">
-      <ion-toolbar color="primary">
-        <ion-title size="large">Info & Links</ion-title>
+    <ion-header>
+      <ion-toolbar color="primary" class="but">
+        <ion-title>Info & Links</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content :fullscreen="true">
+      <ion-header collapse="condense">
+        <ion-toolbar color="primary">
+          <ion-title size="large">Info & Links</ion-title>
+        </ion-toolbar>
+      </ion-header>
       <info-checklist-card></info-checklist-card>
       <info-contact-card></info-contact-card>
       <info-developer-card></info-developer-card>
@@ -27,3 +32,9 @@ export default defineComponent({
   components: {InfoVersionCard, InfoDeveloperCard, InfoContactCard, InfoChecklistCard, IonHeader, IonToolbar, IonTitle, IonContent, IonPage}
 });
 </script>
+
+<style scoped>
+.but {
+  background-color: var(--ion-color-primary);
+}
+</style>

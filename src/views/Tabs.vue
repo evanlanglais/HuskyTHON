@@ -44,3 +44,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style>
+body {
+  background-color: #1B1464;
+}
+</style>

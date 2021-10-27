@@ -1,11 +1,16 @@
 <template>
   <ion-page>
-    <ion-header collapse="condense">
-      <ion-toolbar color="primary">
-        <ion-title size="large">Fundraising</ion-title>
+    <ion-header>
+      <ion-toolbar color="primary" class="but">
+        <ion-title>Fundraising</ion-title>
       </ion-toolbar>
     </ion-header>
-    <ion-content>
+    <ion-content :fullscreen="true">
+      <ion-header collapse="condense">
+        <ion-toolbar color="primary">
+          <ion-title size="large">Fundraising</ion-title>
+        </ion-toolbar>
+      </ion-header>
       <fundraising-search></fundraising-search>
       <fundraising-list title="Top Fundraisers" :items="leaderboardParticipants"/>
     </ion-content>
@@ -38,3 +43,9 @@ export default defineComponent({
   }
 });
 </script>
+
+<style scoped>
+.but {
+  background-color: var(--ion-color-primary);
+}
+</style>
