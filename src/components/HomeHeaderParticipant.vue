@@ -34,8 +34,12 @@ export default defineComponent({
         const cachedParticipant = await Storage.get({key: 'my_profile_cache'});
         if (cachedParticipant.value)
         {
-          this.setParticipant = JSON.parse(cachedParticipant.value);
-          this.isParticipantSet = true;
+          try {
+            this.setParticipant = JSON.parse(cachedParticipant.value);
+            this.isParticipantSet = true;
+          } catch (e) {
+            console.log("Unable to parse saved profile cache");
+          }
         }
 
         const freshParticipant = await GetParticipantById(id.value);
