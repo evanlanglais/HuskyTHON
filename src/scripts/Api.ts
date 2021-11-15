@@ -4,7 +4,7 @@ import {Team} from "@/types/Team";
 import {HuskythonEvent} from "@/types/HuskythonEvent";
 import {DateTime} from "luxon";
 
-const API_URL = "http://localhost:3000/api";
+const API_URL = "https://huskython-api.azurewebsites.net/api";
 
 export async function GetHuskythonEvents(): Promise<HuskythonEvent[] | undefined> {
     try {
