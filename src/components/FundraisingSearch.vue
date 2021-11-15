@@ -44,7 +44,7 @@ export default defineComponent({
     }
   },
   methods: {
-    async search(e) {
+    async search(e: { detail: { value: any } }) {
       const searchTerm = e.detail.value;
       if (!searchTerm) {
         this.isSearching = false;

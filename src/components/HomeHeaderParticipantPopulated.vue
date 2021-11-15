@@ -1,5 +1,5 @@
 <template>
-  <ion-item class="participant" color="primary" lines="none">
+  <ion-item class="participant" color="primary" lines="none" @click="openParticipantDetail()">
     <ion-avatar slot="end" class="participant-avatar">
       <img :src="participant.avatarImageURL" alt="Participant avatar image">
     </ion-avatar>
@@ -17,6 +17,7 @@
 import {IonAvatar, IonItem, IonLabel, IonProgressBar} from "@ionic/vue";
 import {defineComponent, PropType} from "vue";
 import {Participant} from "@/types/Participant";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "HomeHeaderParticipantPopulated",
@@ -36,6 +37,17 @@ export default defineComponent({
       if (this.participant === undefined) return 0;
 
       return this.participant.sumDonations / this.participant.fundraisingGoal;
+    }
+  },
+  setup() {
+    const router = useRouter();
+    return { router };
+  },
+  methods: {
+    async openParticipantDetail() {
+      if (this.participant === undefined) return;
+
+      await this.router.push(`/participant/${this.participant.participantID}`);
     }
   }
 });

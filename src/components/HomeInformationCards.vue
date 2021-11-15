@@ -19,7 +19,7 @@
        <button-card text="Fundraising"
                     :image="require('@/assets/images/fundraising_resources_resized.jpg')"
                     color="tertiary"
-                    :link="require('@/assets/docs/Fundraising Initiatives.pdf').default"></button-card>
+                    :link="this.fundraisingPdfUrl"></button-card>
      </ion-col>
      <ion-col>
        <button-card text="Contact Us"
@@ -32,13 +32,19 @@
 </template>
 
 <script>
-import ButtonCard from "@/components/ButtonCard";
+import ButtonCard from "@/components/InformationCard";
 import { IonGrid, IonRow, IonCol } from "@ionic/vue";
 
 
 export default {
   name: "ButtonCardGrid",
-  components: {ButtonCard, IonGrid, IonCol, IonRow}
+  components: {ButtonCard, IonGrid, IonCol, IonRow},
+  computed:
+  {
+    fundraisingPdfUrl() {
+      return 'https://huskython-api.azurewebsites.net/fundraisinginitiatives';
+    }
+  }
 }
 </script>
 

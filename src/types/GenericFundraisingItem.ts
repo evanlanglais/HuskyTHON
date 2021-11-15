@@ -15,7 +15,7 @@ export function FromParticipant(participant: Participant): GenericFundraisingIte
         name: participant.displayName,
         avatarImageURL: participant.avatarImageURL,
         raised: participant.sumDonations,
-        link: "<todo>"
+        link: `/participant/${participant.participantID}`
     }
 }
 
@@ -25,6 +25,6 @@ export function FromTeam(team: Team): GenericFundraisingItem {
         name: team.name,
         avatarImageURL: team.avatarImageURL,
         raised: team.sumDonations,
-        link: "<todo>"
+        link: `/team/${team.teamID}`
     }
 }

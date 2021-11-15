@@ -21,7 +21,7 @@ import HomeHeader from "@/components/HomeHeader.vue";
 import { defineComponent } from "vue";
 import HomeBanner from "@/components/HomeBanner.vue";
 import HomeCountdown from "@/components/HomeCountdown.vue";
-import ButtonCardGrid from "@/components/ButtonCardGrid.vue";
+import ButtonCardGrid from "@/components/HomeInformationCards.vue";
 
 export default defineComponent({
   name: 'Home',
