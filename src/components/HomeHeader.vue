@@ -1,19 +1,27 @@
 <template>
   <ion-header>
     <ion-toolbar color="primary">
-      <ion-img :src="bannerUrl" alt="HuskyTHON Logo" class="banner-img" slot="start"/>
-      <home-header-participant></home-header-participant>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <ion-img :src="bannerUrl" alt="HuskyTHON Logo" class="banner-img"/>
+          </ion-col>
+          <ion-col size="8">
+            <home-header-participant></home-header-participant>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-toolbar>
   </ion-header>
 </template>
 
 <script>
-import {IonHeader, IonToolbar, IonImg} from "@ionic/vue";
+import {IonHeader, IonGrid, IonRow, IonCol, IonImg} from "@ionic/vue";
 import HomeHeaderParticipant from "@/components/HomeHeaderParticipant";
 
 export default {
   name: "HomeHeader",
-  components: {HomeHeaderParticipant, IonHeader, IonToolbar, IonImg},
+  components: {HomeHeaderParticipant, IonHeader, IonImg, IonGrid, IonRow, IonCol},
   computed: {
     bannerUrl() {
       return require("@/assets/images/launch_logo.png");
@@ -24,7 +32,10 @@ export default {
 
 <style scoped>
 .banner-img {
-  height: 10vh;
-  margin-left: 0.5em;
+  width: 100%;
+  object-fit: contain;
+}
+ion-grid {
+  --ion-grid-padding: 0.5em
 }
 </style>
