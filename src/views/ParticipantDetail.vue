@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import {IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, modalController, IonPage, IonBackButton} from "@ionic/vue";
+import {IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonPage, IonBackButton} from "@ionic/vue";
 import {defineComponent} from "vue";
 import {Participant} from "@/types/Participant";
 import {useRoute} from "vue-router";
@@ -47,9 +47,6 @@ export default defineComponent({
       if (typeof this.id === "string") {
         this.participant = await GetParticipantById(this.id);
       }
-    },
-    close() {
-      modalController.dismiss();
     }
   }
 });

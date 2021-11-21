@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import {IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, modalController, IonPage, IonBackButton} from "@ionic/vue";
+import {IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonPage, IonBackButton} from "@ionic/vue";
 import {defineComponent} from "vue";
 import {useRoute} from "vue-router";
 import {GetTeamById} from "@/scripts/Api";
@@ -47,9 +47,6 @@ export default defineComponent({
       if (typeof this.id === "string") {
         this.team = await GetTeamById(this.id);
       }
-    },
-    close() {
-      modalController.dismiss();
     }
   }
 });
