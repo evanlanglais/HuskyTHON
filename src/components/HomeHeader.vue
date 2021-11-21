@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import {IonHeader, IonGrid, IonRow, IonCol, IonImg} from "@ionic/vue";
+import {IonHeader, IonGrid, IonRow, IonCol, IonImg, IonToolbar} from "@ionic/vue";
 import HomeHeaderParticipant from "@/components/HomeHeaderParticipant";
 
 export default {
   name: "HomeHeader",
-  components: {HomeHeaderParticipant, IonHeader, IonImg, IonGrid, IonRow, IonCol},
+  components: {HomeHeaderParticipant, IonHeader, IonImg, IonGrid, IonRow, IonCol, IonToolbar},
   computed: {
     bannerUrl() {
       return require("@/assets/images/launch_logo.png");

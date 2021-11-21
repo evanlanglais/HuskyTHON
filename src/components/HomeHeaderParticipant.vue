@@ -1,7 +1,12 @@
 <template>
-  <loading-indicator v-if="isLoading && !isParticipantSet"></loading-indicator>
-  <home-header-participant-populated v-if="isParticipantSet" :participant="setParticipant"/>
-  <home-header-participant-unset v-if="!isParticipantSet && !isLoading"/>
+  <loading-indicator v-if="isLoading"></loading-indicator>
+  <div v-if="!isLoading">
+    <home-header-participant-unset v-if="!isProfileSet"/>
+    <home-header-participant-populated v-if="isProfileSet && !!quickAccessProfile" :participant="quickAccessProfile"/>
+    <div class="ion-text-center" v-if="isProfileSet && !quickAccessProfile">
+      <ion-label>Unable to load quick access profile</ion-label>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -9,45 +14,33 @@ import HomeHeaderParticipantPopulated from "@/components/HomeHeaderParticipantPo
 import HomeHeaderParticipantUnset from "@/components/HomeHeaderParticipantUnset.vue";
 import {Participant} from "@/types/Participant";
 import {defineComponent} from "vue";
-import {Storage} from "@capacitor/storage";
 import {GetParticipantById} from "@/scripts/Api";
 import LoadingIndicator from "@/components/LoadingIndicator.vue";
+import {GetQuickAccessProfileId} from "@/scripts/Settings";
+import {IonLabel} from "@ionic/vue";
 
 export default defineComponent({
   name: "HomeHeaderParticipant",
-  components: {LoadingIndicator, HomeHeaderParticipantUnset, HomeHeaderParticipantPopulated},
-  mounted() {
-    this.loadSetParticipant();
+  components: {LoadingIndicator, HomeHeaderParticipantUnset, HomeHeaderParticipantPopulated, IonLabel},
+  activated() {
+    this.loadQuickAccessProfile();
   },
   data() {
     return {
       isLoading: false,
-      isParticipantSet: false,
-      setParticipant: undefined as Participant | undefined
+      isProfileSet: false,
+      quickAccessProfile: undefined as Participant | undefined
     }
   },
   methods: {
-    async loadSetParticipant() {
+    async loadQuickAccessProfile() {
       this.isLoading = true;
-      const id = await Storage.get({key: 'my_profile_id'});
-      if (id.value) {
 
-        const cachedParticipant = await Storage.get({key: 'my_profile_cache'});
-        if (cachedParticipant.value)
-        {
-          try {
-            this.setParticipant = JSON.parse(cachedParticipant.value);
-            this.isParticipantSet = true;
-          } catch (e) {
-            console.log("Unable to parse saved profile cache");
-          }
-        }
+      const id = await GetQuickAccessProfileId();
 
-        const freshParticipant = await GetParticipantById(id.value);
-        this.setParticipant = freshParticipant;
-        await Storage.set({key: 'my_profile_cache', value: JSON.stringify(freshParticipant)});
-
-        this.isParticipantSet = true;
+      if (id) {
+        this.isProfileSet = true;
+        this.quickAccessProfile = await GetParticipantById(id);
       }
 
       this.isLoading = false;

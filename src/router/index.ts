@@ -42,6 +42,10 @@ const routes: Array<RouteRecordRaw> = [
     {
         path: '/team/:id',
         component: TeamDetail
+    },
+    {
+        path: '/settings',
+        component: Settings
     }
 ]
 

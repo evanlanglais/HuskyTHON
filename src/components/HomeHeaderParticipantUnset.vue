@@ -1,19 +1,23 @@
 <template>
   <div class="ion-text-center">
-    <ion-button color="secondary" @click="setProfile()">Find Donor Profile</ion-button>
+    <ion-button color="secondary" fill="outline" @click="findQuickAccessProfile()">Set Quick Access Profile</ion-button>
   </div>
 </template>
 
 <script>
 import {IonButton} from "@ionic/vue";
-import {Storage} from "@capacitor/storage";
+import {useRouter} from "vue-router";
 
 export default {
   name: "HomeHeaderParticipantUnset",
   components: {IonButton},
+  setup() {
+    const router = useRouter();
+    return { router };
+  },
   methods: {
-    setProfile() {
-      Storage.set({key: 'my_profile_id', value: JSON.stringify(843236)});
+    findQuickAccessProfile() {
+      this.router.push('/settings');
     }
   }
 }
