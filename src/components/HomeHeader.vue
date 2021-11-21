@@ -36,6 +36,13 @@ export default {
   object-fit: contain;
 }
 ion-grid {
+  height: 100%;
   --ion-grid-padding: 0.5em
+}
+ion-row{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
 }
 </style>

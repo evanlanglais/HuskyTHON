@@ -1,6 +1,6 @@
 <template>
-  <div class="ion-text-center">
-    <ion-button color="secondary" fill="outline" @click="findQuickAccessProfile()">Set Quick Access Profile</ion-button>
+  <div class="ion-text-center ion-align-items-center">
+    <ion-button color="secondary" fill="outline" size="small" @click="findQuickAccessProfile()">Set Quick Access Profile</ion-button>
   </div>
 </template>
 

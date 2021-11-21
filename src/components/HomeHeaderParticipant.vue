@@ -22,7 +22,7 @@ import {IonLabel} from "@ionic/vue";
 export default defineComponent({
   name: "HomeHeaderParticipant",
   components: {LoadingIndicator, HomeHeaderParticipantUnset, HomeHeaderParticipantPopulated, IonLabel},
-  activated() {
+  mounted() {
     this.loadQuickAccessProfile();
   },
   data() {
