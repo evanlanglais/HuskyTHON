@@ -1,5 +1,5 @@
 <template>
-  <loading-indicator v-if="isLoading"></loading-indicator>
+  <loading-indicator v-if="isLoading" class="ion-margin"></loading-indicator>
   <fundraising-list title="Top Fundraisers" :items="genericParticipants" v-if="!isLoading && !!genericParticipants && genericParticipants.length >= 0"></fundraising-list>
   <fundraising-list title="Top Teams" :items="genericTeams" v-if="!isLoading && !!genericTeams && genericTeams.length >= 0"></fundraising-list>
 </template>

@@ -3,6 +3,7 @@ import { RouteRecordRaw } from 'vue-router';
 import Tabs from '../views/Tabs.vue'
 import ParticipantDetail from '@/views/ParticipantDetail.vue';
 import TeamDetail from '@/views/TeamDetail.vue';
+import Settings from '@/views/Settings.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -26,8 +27,12 @@ const routes: Array<RouteRecordRaw> = [
                 component: () => import('@/views/Events.vue')
             },
             {
-                path: 'fundraising',
-                component: () => import('@/views/Fundraising.vue')
+                path: 'search',
+                component: () => import('@/views/Search.vue')
+            },
+            {
+                path: 'leaderboards',
+                component: () => import('@/views/Leaderboards.vue')
             },
             {
                 path: 'info',
