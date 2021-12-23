@@ -1,5 +1,21 @@
 <template>
-  <ion-slides v-if="events != null && events.length > 0" :options="{effect: 'flip', initialSlide: 0, autoplay: false, speed: 400}" class="event-slider" :pager="true"/>
+  <swiper v-if="events !== undefined && events.length > 0" :modules="modules" :autoplay="false" :pagination="true" :initialSlide="0" :speed="400" effect="flip" class="event-slider" :pager="true">
+    <swiper-slide v-for="event in events" :key="event.id">
+      <ion-card :button="true" @click="openEventDetail(event)">
+        <ion-card-header>
+          <ion-card-subtitle>
+            {{ getTimeInformation(event) }}
+          </ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-text>
+            <h3>{{event.summary}}</h3>
+            <p>{{event.location}}</p>
+          </ion-text>
+        </ion-card-content>
+      </ion-card>
+    </swiper-slide>
+  </swiper>
   <ion-item v-else lines="none" class="ion-text-center">
     <ion-label class="ion-text-wrap">
       <h1>No events to show!</h1>
@@ -8,28 +24,76 @@
   </ion-item>
 </template>
 
-<script>
-import {IonSlides, IonLabel, IonItem} from "@ionic/vue";
-export default {
+<script lang="ts">
+import { IonLabel, IonItem, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonText } from "@ionic/vue";
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Autoplay, Keyboard, Pagination, Scrollbar, Zoom } from 'swiper';
+
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/keyboard';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import 'swiper/css/zoom';
+
+import '@ionic/vue/css/ionic-swiper.css';
+import {HuskythonEvent} from "@/types/HuskythonEvent";
+import {defineComponent} from "vue";
+import {GetUpcomingEvents} from "@/scripts/Api";
+import "luxon"
+import {DateTime} from "luxon";
+
+export default defineComponent({
   name: "HomeEventsSlider",
-  components: {IonSlides, IonLabel, IonItem},
-  props: ["events"]
-}
+  components: {Swiper, SwiperSlide, IonLabel, IonItem, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonText},
+  data() {
+    return {
+      events: undefined as Array<HuskythonEvent> | undefined,
+    }
+  },
+  setup() {
+    return {
+      modules: [Autoplay, Keyboard, Pagination, Scrollbar, Zoom],
+    };
+  },
+  mounted() {
+    this.refreshEvents();
+  },
+  methods: {
+    async refreshEvents() {
+      this.events = await GetUpcomingEvents();
+    },
+    getTimeInformation(event: HuskythonEvent) {
+      if (event.allDay) {
+        if (event.start.hasSame(event.end, 'day')) {
+          return event.start.toLocaleString(DateTime.DATE_SHORT);
+        } else {
+          return `${event.start.toLocaleString(DateTime.DATE_SHORT)} - ${event.end.toLocaleString(DateTime.DATE_SHORT)}`;
+        }
+      } else {
+        if (event.start.hasSame(event.end, 'day')) {
+          return `${event.start.toLocaleString(DateTime.TIME_SIMPLE)} - ${event.end.toLocaleString(DateTime.TIME_SIMPLE)} on ${event.start.toLocaleString(DateTime.DATE_SHORT)}`;
+        } else {
+          return `${event.start.toLocaleString(DateTime.DATETIME_SHORT)} - ${event.end.toLocaleString(DateTime.DATETIME_SHORT)}`;
+        }
+      }
+    },
+    openEventDetail(event: HuskythonEvent) {
+      console.log('')
+    }
+  }
+})
 </script>
 
 <style scoped>
 .event-slider {
-
-  height: 325px;
+  height: 25vh;
   --bullet-background: #F2C413FF;
   --bullet-background-active: #1B1464FF;
-
 }
 
 .event-slider ion-card {
-
-  height: 90%;
   width: 100%;
-
+  height: 80%;
 }
 </style>

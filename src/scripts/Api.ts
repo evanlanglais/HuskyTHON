@@ -27,6 +27,13 @@ export async function GetHuskythonEvents(): Promise<HuskythonEvent[] | undefined
     }
 }
 
+export async function GetUpcomingEvents(): Promise<HuskythonEvent[] | undefined> {
+    const allEvents = await GetHuskythonEvents();
+    if (allEvents === undefined) return undefined;
+
+    return allEvents.filter((event) => event.start > DateTime.now() || (event.start <= DateTime.now() && event.end > DateTime.now()));
+}
+
 export async function SearchForParticipant(query: string): Promise<Participant[] | undefined> {
     try {
         const response = await axios.get(`${API_URL}/participants/search?q=${query}`, {timeout: 5000});
