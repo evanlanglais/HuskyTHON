@@ -36,7 +36,7 @@ import {optionsOutline} from "ionicons/icons";
 import {useRouter} from "vue-router";
 
 export default defineComponent({
-  name: 'Info',
+  name: 'InfoPage',
   components: {InfoVersionCard, InfoDeveloperCard, InfoContactCard, InfoChecklistCard, IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonButtons, IonButton, IonIcon},
   setup() {
     const router = useRouter();

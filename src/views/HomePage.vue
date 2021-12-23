@@ -6,7 +6,7 @@
         <home-banner></home-banner>
         <home-countdown date="2022-02-26" id="countdown"></home-countdown>
       </div>
-      <home-events-slider :events="this.events"></home-events-slider>
+      <home-events-slider></home-events-slider>
       <button-card-grid></button-card-grid>
       <socials-panel></socials-panel>
     </ion-content>
@@ -24,17 +24,12 @@ import HomeCountdown from "@/components/HomeCountdown.vue";
 import ButtonCardGrid from "@/components/HomeInformationCards.vue";
 
 export default defineComponent({
-  name: 'Home',
+  name: 'HomePage',
   components: {
     ButtonCardGrid,
     HomeCountdown,
     HomeBanner,
     HomeHeader, SocialsPanel, HomeEventsSlider, IonContent, IonPage
-  },
-  data() {
-    return {
-      events: []
-    }
   }
 });
 </script>

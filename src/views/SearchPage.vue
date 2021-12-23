@@ -26,7 +26,7 @@ import {useRouter} from "vue-router";
 import {IonContent, IonHeader, IonPage, IonTitle, IonToolbar} from "@ionic/vue";
 
 export default defineComponent({
-  name: "Search",
+  name: "SearchPage",
   components: {DonorDriveSearch, IonPage, IonHeader, IonToolbar, IonTitle, IonContent},
   setup() {
     const router = useRouter();

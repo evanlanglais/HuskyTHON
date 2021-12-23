@@ -24,7 +24,7 @@ import FundraisingSearch from "@/components/DonorDriveSearch.vue";
 import FundraisingLeaderboards from "@/components/FundraisingLeaderboards.vue";
 
 export default defineComponent({
-  name: 'Leaderboards',
+  name: 'LeaderboardsPage',
   components: {FundraisingLeaderboards, IonHeader, IonToolbar, IonTitle, IonContent, IonPage},
   methods: {
     async openSearchModal() {

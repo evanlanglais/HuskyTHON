@@ -43,7 +43,7 @@ import LoadingIndicator from "@/components/LoadingIndicator.vue";
 import {GetHuskythonEvents} from "@/scripts/Api";
 
 export default defineComponent({
-  name: 'Events',
+  name: 'EventsPage',
   components: {
     LoadingIndicator,
     OfflineIndicator,

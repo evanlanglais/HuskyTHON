@@ -59,7 +59,7 @@ import {Participant} from "@/types/Participant";
 import SettingsSelectQuickAccessProfileModal from "@/components/SettingsSelectQuickAccessProfileModal.vue";
 
 export default defineComponent({
-  name: "Settings",
+  name: "SettingsPage",
   components: {
     HomeHeaderParticipantPopulated,
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonPage, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton},

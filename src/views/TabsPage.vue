@@ -38,7 +38,7 @@ import {home, calendar, flame, informationCircle, search} from 'ionicons/icons';
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'Tabs',
+  name: 'TabsPage',
   components: {IonLabel, IonTabs, IonTabBar, IonTabButton, IonIcon, IonPage, IonRouterOutlet},
   setup() {
     return {
