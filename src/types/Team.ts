@@ -2,7 +2,7 @@ export interface Team {
     name: string;
     teamID: number;
     avatarImageURL: string;
-    capitanDisplayName: string;
+    captainDisplayName: string;
     numParticipants: number;
     fundraisingGoal: number;
     sumDonations: number;

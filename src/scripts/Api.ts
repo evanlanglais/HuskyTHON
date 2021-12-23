@@ -1,8 +1,9 @@
 import axios from "axios";
-import {Donation, Participant} from "@/types/Participant";
+import {Participant} from "@/types/Participant";
 import {Team} from "@/types/Team";
 import {HuskythonEvent} from "@/types/HuskythonEvent";
 import {DateTime} from "luxon";
+import {Donation} from "@/types/Donation";
 
 const API_URL = "https://huskython-api.azurewebsites.net/api";
 
