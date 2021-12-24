@@ -7,7 +7,7 @@
     </ion-header>
     <ion-content>
       <ion-header collapse="condense">
-        <ion-toolbar color="primary">
+        <ion-toolbar>
           <ion-title size="large">Events</ion-title>
         </ion-toolbar>
       </ion-header>
