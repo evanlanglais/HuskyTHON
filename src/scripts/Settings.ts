@@ -2,7 +2,7 @@ import {Storage} from "@capacitor/storage";
 
 const QUICK_ACCESS_PROFILE_ID_NAME = "quick_access_profile_id";
 
-export async function GetQuickAccessProfileId(): Promise<string | null> {
+export async function GetQuickAccessProfileId(): Promise<string | undefined> {
     try {
         const id = await Storage.get({key: QUICK_ACCESS_PROFILE_ID_NAME});
         if (id.value) {
@@ -12,7 +12,7 @@ export async function GetQuickAccessProfileId(): Promise<string | null> {
         console.log(`Unable to get ${QUICK_ACCESS_PROFILE_ID_NAME} - ${e}`);
     }
 
-    return null;
+    return undefined;
 }
 
 export async function SetQuickAccessProfileId(id: string) {
@@ -21,8 +21,6 @@ export async function SetQuickAccessProfileId(id: string) {
     } catch (e) {
         console.log(`Unable to set ${QUICK_ACCESS_PROFILE_ID_NAME} - ${e}`);
     }
-
-    return null;
 }
 
 export async function RemoveQuickAccessProfileId() {

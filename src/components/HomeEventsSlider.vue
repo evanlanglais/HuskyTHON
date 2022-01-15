@@ -1,6 +1,8 @@
 <template>
-  <swiper v-if="events !== undefined && events.length > 0" :modules="modules" :autoplay="false" :pagination="true" :initialSlide="0" :speed="400" effect="flip" class="event-slider" :pager="true">
-    <swiper-slide v-for="event in events" :key="event.id">
+  <loading-indicator v-if="this.loadStateLoading"/>
+  <offline-indicator v-if="this.loadStateError"/>
+  <swiper v-if="this.loadStateLoading && this.upcomingEvents.length > 0" :modules="modules" :autoplay="false" :pagination="true" :initialSlide="0" :speed="400" effect="flip" class="event-slider" :pager="true">
+    <swiper-slide v-for="event in this.upcomingEvents" :key="event.id">
       <ion-card :button="true" @click="openEventDetail(event)">
         <ion-card-header>
           <ion-card-subtitle>
@@ -38,31 +40,37 @@ import 'swiper/css/zoom';
 
 import '@ionic/vue/css/ionic-swiper.css';
 import {HuskythonEvent} from "@/types/HuskythonEvent";
-import {defineComponent} from "vue";
-import {GetUpcomingEvents} from "@/scripts/Api";
+import {computed, defineComponent} from "vue";
+import OfflineIndicator from "@/components/OfflineIndicator.vue";
+import LoadingIndicator from "@/components/LoadingIndicator.vue";
 import "luxon"
 import {DateTime} from "luxon";
+import LoadState from "@/types/LoadState";
+import {useStore} from "vuex";
 
 export default defineComponent({
   name: "HomeEventsSlider",
-  components: {Swiper, SwiperSlide, IonLabel, IonItem, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonText},
-  data() {
-    return {
-      events: undefined as Array<HuskythonEvent> | undefined,
-    }
-  },
+  components: {Swiper, SwiperSlide, IonLabel, IonItem, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonText, OfflineIndicator, LoadingIndicator},
   setup() {
+    const store = useStore();
+
     return {
       modules: [Autoplay, Keyboard, Pagination, Scrollbar, Zoom],
+      fetchEvents: () => store.dispatch("fetchEvents"),
+      loadStateInit: computed(() => store.state.eventState.loadState === LoadState.INIT),
+      loadStateLoaded: computed(() => store.state.eventState.loadState === LoadState.LOADED),
+      loadStateLoading: computed(() => store.state.eventState.loadState === LoadState.LOADING || store.state.eventState.loadState === LoadState.INIT),
+      loadStateError: computed(() => store.state.eventState.loadState === LoadState.ERROR),
+      upcomingEvents: computed(() => store.state.eventState.upcomingEvents),
     };
   },
   mounted() {
-    this.refreshEvents();
+    if (this.loadStateInit)
+    {
+      this.fetchEvents();
+    }
   },
   methods: {
-    async refreshEvents() {
-      this.events = await GetUpcomingEvents();
-    },
     getTimeInformation(event: HuskythonEvent) {
       if (event.allDay) {
         if (event.start.hasSame(event.end, 'day')) {

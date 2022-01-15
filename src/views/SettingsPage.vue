@@ -19,14 +19,12 @@
           </ion-card-subtitle>
         </ion-card-header>
         <ion-card-content class="ion-text-center">
-          <div v-if="quickAccessProfile !== null">
+          <div v-if="quickAccessProfile !== undefined">
             <home-header-participant-populated :participant="quickAccessProfile"></home-header-participant-populated>
-          </div>
-          <div v-if="quickAccessProfileId === null">
-            <ion-button @click="selectQuickAccessProfile()">Search For Profile</ion-button>
-          </div>
-          <div v-if="quickAccessProfileId != null">
             <ion-button @click="removeQuickAccessProfile()">Remove Quick-Access Profile</ion-button>
+          </div>
+          <div v-if="quickAccessProfile === undefined">
+            <ion-button @click="selectQuickAccessProfile()">Search For Profile</ion-button>
           </div>
         </ion-card-content>
       </ion-card>
@@ -48,54 +46,42 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
-  IonButton,
-  modalController
+  IonButton
 } from "@ionic/vue";
-import {defineComponent} from "vue";
-import {RemoveQuickAccessProfileId, GetQuickAccessProfileId, SetQuickAccessProfileId} from "@/scripts/Settings";
+import {computed, defineComponent} from "vue";
 import HomeHeaderParticipantPopulated from "@/components/HomeHeaderParticipantPopulated.vue";
-import {GetParticipantById} from "@/scripts/Api";
-import {Participant} from "@/types/Participant";
-import SettingsSelectQuickAccessProfileModal from "@/components/SettingsSelectQuickAccessProfileModal.vue";
+import {useRouter} from "vue-router";
+import {useStore} from "vuex";
+import LoadState from "@/types/LoadState";
 
 export default defineComponent({
   name: "SettingsPage",
   components: {
     HomeHeaderParticipantPopulated,
     IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonPage, IonBackButton, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonButton},
-  data() {
+  setup() {
+    const router = useRouter();
+    const store = useStore();
+
     return {
-      quickAccessProfileId: null as string | null,
-      quickAccessProfile: null as Participant | null | undefined
-    }
+      router,
+      removeQuickAccessProfile: () => store.dispatch("removeQuickAccessProfile"),
+      loadQuickAccessProfile: () => store.dispatch("loadQuickAccessProfile"),
+      loadStateInit: computed(() => store.state.settingState.loadState === LoadState.INIT),
+      loadStateLoaded: computed(() => store.state.settingState.loadState === LoadState.LOADED),
+      loadStateLoading: computed(() => store.state.settingState.loadState === LoadState.LOADING || store.state.eventState.loadState === LoadState.INIT),
+      loadStateError: computed(() => store.state.settingState.loadState === LoadState.ERROR),
+      quickAccessProfile: computed(() => store.state.settingState.quickAccessProfile),
+    };
   },
   async mounted() {
-    await this.refreshQuickAccessProfile();
+    if (this.loadStateInit) {
+      await this.loadQuickAccessProfile();
+    }
   },
   methods: {
     async selectQuickAccessProfile() {
-      const modal = await modalController.create({
-        component: SettingsSelectQuickAccessProfileModal, //Modal is name of the component to render inside ionic modal
-      });
-
-      modal.onDidDismiss().then(async (data) => {
-        if (data.data === null) return;
-
-        const participant: Participant = data.data;
-
-        await SetQuickAccessProfileId(participant.participantID.toString());
-        await this.refreshQuickAccessProfile();
-      })
-
-      await modal.present();
-    },
-    removeQuickAccessProfile() {
-      RemoveQuickAccessProfileId();
-      this.refreshQuickAccessProfile();
-    },
-    async refreshQuickAccessProfile() {
-      this.quickAccessProfileId = await GetQuickAccessProfileId();
-      this.quickAccessProfile = this.quickAccessProfileId != null ? await GetParticipantById(this.quickAccessProfileId) : null;
+      await this.router.push(`/settings/quick-access-profile`);
     }
   }
 });

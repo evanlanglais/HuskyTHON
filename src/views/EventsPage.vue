@@ -11,20 +11,21 @@
           <ion-title size="large">Events</ion-title>
         </ion-toolbar>
       </ion-header>
-      <ion-refresher ref="refresher" slot="fixed" @ionRefresh="doRefresh($event)">
+      <ion-refresher ref="refresher" slot="fixed" @ionRefresh="this.fetchEvents(); $event.target.complete()">
         <ion-refresher-content :pulling-icon="chevronDownCircleOutline"
                                pulling-text="Pull to refresh"
                                refreshing-spinner="circles"
-                               refreshing-text="Refreshing...">
+                               refreshing-text="Refreshing..."
+        >
         </ion-refresher-content>
       </ion-refresher>
-      <loading-indicator v-if="loading"/>
-      <offline-indicator v-if="!events"/>
-      <div v-if="!loading && !!events">
+      <loading-indicator v-if="this.loadStateLoading"/>
+      <offline-indicator v-if="this.loadStateError"/>
+      <div v-if="this.loadStateLoaded">
         <div class="ion-text-center">
-          <events-calendar :events="events" :focus-date="focusDate" @focus-date-change="focusDate = $event"></events-calendar>
+          <events-calendar :events="this.allEvents" :focus-date="focusDate" @focus-date-change="focusDate = $event"></events-calendar>
         </div>
-        <events-list :events="events" :focus-date="focusDate"></events-list>
+        <events-list :events="this.allEvents" :focus-date="focusDate"></events-list>
       </div>
     </ion-content>
   </ion-page>
@@ -36,12 +37,13 @@ import {chevronDownCircleOutline} from 'ionicons/icons';
 import EventsList from "@/components/EventsList.vue";
 import EventsCalendar from "@/components/EventsCalendar.vue";
 import { DateTime } from "luxon";
-import { defineComponent } from "vue";
-import {HuskythonEvent} from "@/types/HuskythonEvent";
+import {computed, defineComponent} from "vue";
+
 import OfflineIndicator from "@/components/OfflineIndicator.vue";
 import LoadingIndicator from "@/components/LoadingIndicator.vue";
-import {GetHuskythonEvents} from "@/scripts/Api";
 
+import LoadState from "@/types/LoadState";
+import {useStore} from "vuex";
 export default defineComponent({
   name: 'EventsPage',
   components: {
@@ -49,28 +51,27 @@ export default defineComponent({
     OfflineIndicator,
     EventsCalendar, EventsList, IonContent, IonPage, IonHeader, IonTitle, IonToolbar, IonRefresher, IonRefresherContent},
   setup() {
+    const store = useStore();
+
     return {
-      chevronDownCircleOutline
+      chevronDownCircleOutline,
+      fetchEvents: () => store.dispatch("fetchEvents"),
+      loadStateInit: computed(() => store.state.eventState.loadState === LoadState.INIT),
+      loadStateLoaded: computed(() => store.state.eventState.loadState === LoadState.LOADED),
+      loadStateLoading: computed(() => store.state.eventState.loadState === LoadState.LOADING || store.state.eventState.loadState === LoadState.INIT),
+      loadStateError: computed(() => store.state.eventState.loadState === LoadState.ERROR),
+      allEvents: computed(() => store.state.eventState.allEvents),
     }
   },
   data() {
     return {
-      loading: false,
-      events: undefined as (Array<HuskythonEvent> | undefined),
       focusDate: DateTime.now()
     }
   },
   mounted() {
-    this.refreshEvents();
-  },
-  methods: {
-    async refreshEvents() {
-      this.loading = true;
-      this.events = await GetHuskythonEvents();
-      this.loading = false;
-    },
-    doRefresh(event: any) {
-      this.refreshEvents().finally(() => event.target.complete());
+    if (this.loadStateInit)
+    {
+      this.fetchEvents();
     }
   }
 });

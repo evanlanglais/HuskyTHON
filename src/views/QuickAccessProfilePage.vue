@@ -2,8 +2,10 @@
   <ion-page>
     <ion-header>
       <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+          <ion-back-button color="secondary"></ion-back-button>
+        </ion-buttons>
         <ion-title>Set Quick Access Profile</ion-title>
-        <ion-button color="secondary" slot="primary" fill="outline" @click="close(null)">Cancel</ion-button>
       </ion-toolbar>
     </ion-header>
 
@@ -17,15 +19,20 @@
 import {defineComponent} from "vue";
 import DonorDriveSearch from "@/components/DonorDriveSearch.vue";
 import {Participant} from "@/types/Participant";
-import {alertController, modalController, IonPage, IonHeader, IonToolbar, IonTitle, IonButton, IonContent} from "@ionic/vue";
+import {alertController, IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons} from "@ionic/vue";
+import {useStore} from "vuex";
 
 export default defineComponent({
-  name: "SettingsSelectQuickAccessProfileModal",
-  components: {DonorDriveSearch, IonPage, IonHeader, IonToolbar, IonTitle, IonButton, IonContent},
+  name: "QuickAccessProfilePage",
+  components: {DonorDriveSearch, IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonBackButton, IonButtons},
+  setup() {
+    const store = useStore();
+
+    return {
+      setQuickAccessProfile: (participant: Participant) => store.dispatch("setQuickAccessProfile", participant),
+    }
+  },
   methods: {
-    close(participant: Participant | null) {
-      modalController.dismiss(participant);
-    },
     async onParticipantSelected(participant: Participant) {
       const alert = await alertController
         .create({
@@ -43,7 +50,8 @@ export default defineComponent({
             {
               text: 'Yes',
               handler: () => {
-                this.close(participant);
+                this.setQuickAccessProfile(participant);
+                this.$router.back();
               },
             },
           ],

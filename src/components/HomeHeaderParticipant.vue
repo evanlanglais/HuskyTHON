@@ -1,49 +1,41 @@
 <template>
-  <loading-indicator v-if="isLoading"></loading-indicator>
-  <div v-if="!isLoading">
-    <home-header-participant-unset v-if="!isProfileSet"/>
-    <home-header-participant-populated v-if="isProfileSet && !!quickAccessProfile" :participant="quickAccessProfile"/>
-    <div class="ion-text-center" v-if="isProfileSet && !quickAccessProfile">
-      <ion-label>Unable to load quick access profile</ion-label>
-    </div>
+  <loading-indicator v-if="this.loadStateLoading"></loading-indicator>
+  <div v-if="this.loadStateLoaded">
+    <home-header-participant-unset v-if="this.quickAccessProfile === undefined"/>
+    <home-header-participant-populated v-else :participant="this.quickAccessProfile"/>
+  </div>
+  <div class="ion-text-center" v-if="this.loadStateError">
+    <ion-label>Unable to load quick access profile</ion-label>
   </div>
 </template>
 
 <script lang="ts">
 import HomeHeaderParticipantPopulated from "@/components/HomeHeaderParticipantPopulated.vue";
 import HomeHeaderParticipantUnset from "@/components/HomeHeaderParticipantUnset.vue";
-import {Participant} from "@/types/Participant";
-import {defineComponent} from "vue";
-import {GetParticipantById} from "@/scripts/Api";
+import {computed, defineComponent} from "vue";
 import LoadingIndicator from "@/components/LoadingIndicator.vue";
-import {GetQuickAccessProfileId} from "@/scripts/Settings";
 import {IonLabel} from "@ionic/vue";
+import {useStore} from "vuex";
+import LoadState from "@/types/LoadState";
 
 export default defineComponent({
   name: "HomeHeaderParticipant",
   components: {LoadingIndicator, HomeHeaderParticipantUnset, HomeHeaderParticipantPopulated, IonLabel},
-  mounted() {
-    this.loadQuickAccessProfile();
-  },
-  data() {
+  setup() {
+    const store = useStore();
+
     return {
-      isLoading: false,
-      isProfileSet: false,
-      quickAccessProfile: undefined as Participant | undefined
+      loadQuickAccessProfile: () => store.dispatch("loadQuickAccessProfile"),
+      loadStateInit: computed(() => store.state.settingState.loadState === LoadState.INIT),
+      loadStateLoaded: computed(() => store.state.settingState.loadState === LoadState.LOADED),
+      loadStateLoading: computed(() => store.state.settingState.loadState === LoadState.LOADING || store.state.eventState.loadState === LoadState.INIT),
+      loadStateError: computed(() => store.state.settingState.loadState === LoadState.ERROR),
+      quickAccessProfile: computed(() => store.state.settingState.quickAccessProfile),
     }
   },
-  methods: {
-    async loadQuickAccessProfile() {
-      this.isLoading = true;
-
-      const id = await GetQuickAccessProfileId();
-
-      if (id) {
-        this.isProfileSet = true;
-        this.quickAccessProfile = await GetParticipantById(id);
-      }
-
-      this.isLoading = false;
+  mounted() {
+    if (this.loadStateInit) {
+      this.loadQuickAccessProfile();
     }
   }
 });
