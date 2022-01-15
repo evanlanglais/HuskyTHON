@@ -1,7 +1,7 @@
 <template>
   <loading-indicator v-if="this.loadStateLoading"/>
   <offline-indicator v-if="this.loadStateError"/>
-  <swiper v-if="this.loadStateLoading && this.upcomingEvents.length > 0" :modules="modules" :autoplay="false" :pagination="true" :initialSlide="0" :speed="400" effect="flip" class="event-slider" :pager="true">
+  <swiper v-if="this.loadStateLoaded && this.upcomingEvents.length > 0" :modules="modules" :autoplay="false" :pagination="true" :initialSlide="0" :speed="400" effect="flip" class="event-slider" :pager="true">
     <swiper-slide v-for="event in this.upcomingEvents" :key="event.id">
       <ion-card :button="true" @click="openEventDetail(event)">
         <ion-card-header>
