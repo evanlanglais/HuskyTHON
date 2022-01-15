@@ -9,7 +9,7 @@
         <p>Check back in the future for events as they are planned</p>
       </ion-label>
     </ion-item>
-    <ion-item detail v-for="event in this.filteredEvents" :key="event.id">
+    <ion-item detail v-for="event in this.filteredEvents" :key="event.id" @click="eventDetail(event.id)">
       <ion-label class="ion-text-wrap">
         <h2>{{ event.summary }}</h2>
         <h3 v-if="this.now < event.start">Event beginning at {{ event.start.toLocaleString() }}</h3>
@@ -26,11 +26,21 @@ import {IonItem, IonItemGroup, IonItemDivider, IonLabel} from "@ionic/vue";
 import {DateTime} from "luxon";
 import {defineComponent} from "vue";
 import {HuskythonEvent} from "@/types/HuskythonEvent";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "EventsListFocus",
   components: {IonItem, IonItemGroup, IonItemDivider, IonLabel},
   props: ["events", "focusDate"],
+  setup() {
+    const router = useRouter();
+    return { router };
+  },
+  methods: {
+    eventDetail(eventId: string) {
+      this.router.push(`/event/${eventId}`);
+    }
+  },
   computed: {
     now() {
       return DateTime.now();
@@ -38,7 +48,7 @@ export default defineComponent({
     focusDateString() {
       return this.focusDate.toLocaleString(DateTime.DATE_FULL);
     },
-    filteredEvents() {
+    filteredEvents(): Array<HuskythonEvent> {
       return this.events.filter((event: HuskythonEvent) => (this.focusDate.startOf("day") >= event.start.startOf("day") && this.focusDate.startOf("day") <= event.end.startOf("day")))
     }
   }

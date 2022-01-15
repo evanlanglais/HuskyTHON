@@ -46,6 +46,10 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/TeamDetailPage.vue')
     },
     {
+        path: '/event/:id',
+        component: () => import('@/views/EventDetailPage.vue')
+    },
+    {
         path: '/settings',
         component: () => import('@/views/SettingsPage.vue'),
     },

@@ -47,14 +47,17 @@ import "luxon"
 import {DateTime} from "luxon";
 import LoadState from "@/types/LoadState";
 import {useStore} from "vuex";
+import {useRouter} from "vue-router";
 
 export default defineComponent({
   name: "HomeEventsSlider",
   components: {Swiper, SwiperSlide, IonLabel, IonItem, IonCard, IonCardHeader, IonCardSubtitle, IonCardContent, IonText, OfflineIndicator, LoadingIndicator},
   setup() {
     const store = useStore();
+    const router = useRouter();
 
     return {
+      router,
       modules: [Autoplay, Keyboard, Pagination, Scrollbar, Zoom],
       fetchEvents: () => store.dispatch("fetchEvents"),
       loadStateInit: computed(() => store.state.eventState.loadState === LoadState.INIT),
@@ -87,7 +90,7 @@ export default defineComponent({
       }
     },
     openEventDetail(event: HuskythonEvent) {
-      console.log('')
+      this.router.push(`/event/${event.id}`);
     }
   }
 })
