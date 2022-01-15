@@ -1,9 +1,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 import Tabs from '../views/TabsPage.vue'
-import ParticipantDetail from '@/views/ParticipantDetailPage.vue';
-import TeamDetail from '@/views/TeamDetailPage.vue';
-import Settings from '@/views/SettingsPage.vue';
 
 const routes: Array<RouteRecordRaw> = [
     {
@@ -42,15 +39,19 @@ const routes: Array<RouteRecordRaw> = [
     },
     {
         path: '/participant/:id',
-        component: ParticipantDetail
+        component: () => import('@/views/ParticipantDetailPage.vue')
     },
     {
         path: '/team/:id',
-        component: TeamDetail
+        component: () => import('@/views/TeamDetailPage.vue')
     },
     {
         path: '/settings',
-        component: Settings
+        component: () => import('@/views/SettingsPage.vue'),
+    },
+    {
+        path: '/settings/quick-access-profile',
+        component: () => import('@/views/QuickAccessProfilePage.vue')
     }
 ]
 
