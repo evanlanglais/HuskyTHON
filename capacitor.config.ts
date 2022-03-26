@@ -1,10 +1,13 @@
 import {CapacitorConfig} from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-    appId: 'com.evanlanglais.huskython',
+    appId: 'com.evanlanglais.huskythonios',
     appName: 'HuskyTHON',
     webDir: 'dist',
-    bundledWebRuntime: false
+    bundledWebRuntime: false,
+    ios: {
+        scheme: 'HuskyTHON'
+    }
 };
 
 export default config;
