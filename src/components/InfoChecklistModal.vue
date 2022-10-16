@@ -135,7 +135,7 @@
 
 <script lang="ts">
 import {IonItem, IonItemDivider, IonList, IonLabel, IonCard, IonContent, IonCardHeader, IonCardTitle, IonCheckbox, IonHeader, IonToolbar, IonTitle, IonButton, IonPage, modalController} from "@ionic/vue";
-import {Storage} from '@capacitor/storage';
+import {Preferences} from '@capacitor/preferences';
 import { defineComponent } from "vue";
 
 export default defineComponent({
@@ -147,7 +147,7 @@ export default defineComponent({
     }
   },
   mounted: async function() {
-    const {value} = await Storage.get({key: 'checklist_json'});
+    const {value} = await Preferences.get({key: 'checklist_json'});
 
     if (value) {
       this.checklistModel = JSON.parse(value);
@@ -155,7 +155,7 @@ export default defineComponent({
   },
   methods: {
     saveAndClose: async function() {
-      await Storage.set({key: 'checklist_json', value: JSON.stringify(this.checklistModel)});
+      await Preferences.set({key: 'checklist_json', value: JSON.stringify(this.checklistModel)});
       await modalController.dismiss();
     }
   }
