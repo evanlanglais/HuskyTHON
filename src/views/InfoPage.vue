@@ -20,7 +20,7 @@
       <info-checklist-card></info-checklist-card>
       <info-contact-card></info-contact-card>
       <info-developer-card></info-developer-card>
-      <info-version-card appVersion="3.0.0"></info-version-card>
+      <info-version-card appVersion="3.1.0"></info-version-card>
     </ion-content>
   </ion-page>
 </template>
