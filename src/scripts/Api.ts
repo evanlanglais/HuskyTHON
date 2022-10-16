@@ -4,6 +4,7 @@ import {Team} from "@/types/Team";
 import {HuskythonEvent} from "@/types/HuskythonEvent";
 import {DateTime} from "luxon";
 import {Donation} from "@/types/Donation";
+import {MainEvent} from "@/types/MainEvent";
 
 const API_URL = "https://huskython-api.azurewebsites.net/api";
 
@@ -114,6 +115,17 @@ export async function GetTeamById(id: string): Promise<Team | undefined> {
 export async function GetTeamParticipants(id: string): Promise<Participant[] | undefined> {
     try {
         const response = await axios.get(`${API_URL}/teams/${id}/participants`, {timeout: 5000});
+
+        return response.data;
+    } catch (e) {
+        console.log(e);
+        return undefined;
+    }
+}
+
+export async function GetMainEvent(): Promise<MainEvent | undefined> {
+    try {
+        const response = await axios.get(`${API_URL}/main-event`, {timeout: 5000});
 
         return response.data;
     } catch (e) {
