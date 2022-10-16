@@ -4,10 +4,11 @@ import { InjectionKey } from 'vue'
 import {Commit, createStore, Store, useStore as baseUseStore} from 'vuex'
 import {HuskythonEvent} from "@/types/HuskythonEvent";
 import LoadState from "@/types/LoadState";
-import {GetHuskythonEvents, GetParticipantById} from "@/scripts/Api";
+import {GetHuskythonEvents, GetMainEvent, GetParticipantById} from "@/scripts/Api";
 import {DateTime} from "luxon";
 import {Participant} from "@/types/Participant";
 import {GetQuickAccessProfileId, RemoveQuickAccessProfileId, SetQuickAccessProfileId} from "@/scripts/Settings";
+import {MainEvent} from "@/types/MainEvent";
 
 export interface SettingState {
   loadState: number,
@@ -20,9 +21,15 @@ export interface EventState {
   upcomingEvents: Array<HuskythonEvent>
 }
 
+export interface MainEventState {
+  loadState: number,
+  eventInformation: MainEvent | undefined
+}
+
 export interface State {
   eventState: EventState,
-  settingState: SettingState
+  settingState: SettingState,
+  mainEventState: MainEventState
 }
 
 export const key: InjectionKey<Store<State>> = Symbol()
@@ -37,6 +44,10 @@ export const store = createStore<State>({
     settingState: {
       loadState: LoadState.INIT,
       quickAccessProfile: undefined
+    },
+    mainEventState: {
+      loadState: LoadState.INIT,
+      eventInformation: undefined
     }
   },
   getters: {
@@ -51,6 +62,9 @@ export const store = createStore<State>({
     },
     quickAccessProfile(state: State) {
       return state.settingState.quickAccessProfile;
+    },
+    mainEventInformation(state: State) {
+      return state.mainEventState.eventInformation;
     }
   },
   actions: {
@@ -97,7 +111,18 @@ export const store = createStore<State>({
       await RemoveQuickAccessProfileId();
       commit('setQuickAccessProfile', undefined);
       commit('setSettingsLoadState', LoadState.LOADED);
-    }
+    },
+    async fetchMainEvent({ commit }: { commit: Commit }) {
+      commit('setMainEventLoadState', LoadState.LOADING);
+      const data = await GetMainEvent();
+      if (data === undefined) {
+        commit('setMainEventLoadState', LoadState.ERROR);
+        return;
+      }
+
+      commit('setMainEventInformation', data);
+      commit('setMainEventLoadState', LoadState.LOADED);
+    },
   },
   mutations: {
     saveAllEvents(state: any, payload: any){
@@ -114,6 +139,12 @@ export const store = createStore<State>({
     },
     setQuickAccessProfile (state: any, payload: Participant) {
       state.settingState.quickAccessProfile = payload;
+    },
+    setMainEventLoadState (state: any, payload: any) {
+      state.mainEventState.loadState = payload;
+    },
+    setMainEventInformation (state: any, payload: MainEvent) {
+      state.mainEventState.eventInformation = payload;
     }
   }
 });
