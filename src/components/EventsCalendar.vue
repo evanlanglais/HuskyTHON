@@ -7,6 +7,7 @@ import { Calendar } from 'v-calendar';
 import { DateTime } from "luxon";
 import {defineComponent, PropType} from "vue";
 import {HuskythonEvent} from "@/types/HuskythonEvent";
+import 'v-calendar/dist/style.css';
 
 export default defineComponent({
   name: "EventsCalendar",
