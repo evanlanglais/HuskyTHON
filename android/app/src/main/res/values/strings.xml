@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HuskyTHON</string>
+    <string name="title_activity_main">HuskyTHON</string>
+    <string name="package_name">com.evanlanglais.huskythonios</string>
+    <string name="custom_url_scheme">com.evanlanglais.huskythonios</string>
+</resources>

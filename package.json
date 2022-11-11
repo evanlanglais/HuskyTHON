@@ -14,6 +14,7 @@
     "ionic:serve": "vue-cli-service serve"
   },
   "dependencies": {
+    "@capacitor/android": "4.3.0",
     "@capacitor/app": "4.0.1",
     "@capacitor/browser": "4.0.1",
     "@capacitor/core": "4.3.0",
@@ -52,6 +53,7 @@
     "@vue/compiler-sfc": "^3.2.26",
     "@vue/eslint-config-typescript": "^10.0.0",
     "@vue/test-utils": "^2.0.0-rc.18",
+    "cordova-res": "0.15.4",
     "eslint": "^8.5.0",
     "eslint-plugin-vue": "^8.2.0",
     "file-loader": "^6.2.0",
