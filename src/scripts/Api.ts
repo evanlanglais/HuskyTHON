@@ -6,7 +6,7 @@ import {DateTime} from "luxon";
 import {Donation} from "@/types/Donation";
 import {MainEvent} from "@/types/MainEvent";
 
-const API_URL = "https://huskython-api.azurewebsites.net/api";
+const API_URL = "https://huskython.xynon.ventures/api";
 
 export async function GetHuskythonEvents(): Promise<HuskythonEvent[] | undefined> {
     try {
